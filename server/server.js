@@ -1,7 +1,7 @@
 
 import express from "express"
+import path from "path"
 import mongoose from "mongoose";
-import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
 import dotenv from "dotenv"
@@ -12,17 +12,22 @@ import tasks from "./routes/tasks.js"
 import { errorMiddle } from "./middlewares/errorMiddle.js";
 
 const app = express();
+const __dirname = path.resolve()
+app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
     credentials:true,
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5000",
 }));
 
 app.use("/user",registration)
 app.use("/methods",tasks)
 app.use(errorMiddle)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+});  
 const start =  async () => {
     try {
         app.listen(process.env.PORT || 3000, ()=>{console.log("server started")})

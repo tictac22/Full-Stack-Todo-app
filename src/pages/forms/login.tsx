@@ -47,7 +47,7 @@ export const Login:React.FC = () => {
                                 Forgot password?
                             </Typography>
                     </Link>
-                    <Link to="/">
+                    <Link to="/registration">
                             <Typography sx={{textAlign:"right",display:"block",textDecoration:"underline",color: "rgb(38 128 216)"}}>           
                                 Don't have an account? Sign Up
                             </Typography>
