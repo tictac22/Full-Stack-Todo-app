@@ -12,7 +12,6 @@ export const ActivateAccount:React.FC = () => {
                 
             }
             catch(e) {
-                console.log(e)
             }
             finally{
                 navigate(`/`);

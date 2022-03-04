@@ -13,7 +13,6 @@ export const Home:React.FC = () => {
     const dispatch = useAppDispatch()
     const {isLoading} = useQuery("isAuth", ()=>AuthService.isAuth(), {
         onSettled:data => {
-            console.log(data)
             if(data.type === "auth" || !data.isActivated) {
                 return navigate("/login", { replace: true });
             }
