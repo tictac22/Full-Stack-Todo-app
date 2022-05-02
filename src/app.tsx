@@ -2,18 +2,10 @@
 import React from "react"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
-import { Home } from "./pages/home"
 
-import { Registration } from "./pages/forms/registration"
-import { Login } from "./pages/forms/login"
-import { RecoverPassword } from "./pages/forms/forgotPassword"
-import { Provider } from "react-redux"
-import { store } from './redux/store';
 import { QueryClientProvider,QueryClient } from "react-query"
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { ActivateAccount } from './pages/forms/activateAccount';
-import { ResettingPassword } from './pages/forms/resetingPassword';
-
+import { AppContext } from "./context"
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -21,23 +13,28 @@ const queryClient = new QueryClient({
         },
     },   
 })
+const DynamicHome  = React.lazy(() => import('./pages/home').then(module => ({default:module.Home})))
+const DynamicRegistration  = React.lazy(() => import('./pages/forms/registration').then(module => ({default:module.Registration})))
+const DynamicLogin  = React.lazy(() => import('./pages/forms/login').then(module => ({default:module.Login})))
+const DynamicRecoverPassword  = React.lazy(() => import('./pages/forms/forgotPassword').then(module => ({default:module.RecoverPassword})))
+
 
 export const App:React.FC = () => {
     return (
         <div className="wrapper">
             <QueryClientProvider client ={queryClient}>
-                <Provider store={store}>
-                    <Router>
-                        <Routes>
-                            <Route path="/" element={<Home/>}/>
-                            <Route path="/registration" element={<Registration/>}/>
-                            <Route path="/login" element={<Login/>}/>
-                            <Route path="/password" element={<RecoverPassword/>}/>
-                            <Route path="/resetpassword:token" element={<ResettingPassword/>}/>
-                            <Route path="/confirm:link" element={<ActivateAccount/>}/>
-                        </Routes>
-                    </Router>
-                </Provider>
+                <AppContext>
+                    <React.Suspense fallback={""}>
+                        <Router>
+                            <Routes>
+                                <Route path="/" element={<DynamicHome/>}/>
+                                <Route path="/registration" element={<DynamicRegistration/>}/>
+                                <Route path="/login" element={<DynamicLogin/>}/>
+                                <Route path="/password" element={<DynamicRecoverPassword/>}/>
+                            </Routes>
+                        </Router>
+                    </React.Suspense>
+                </AppContext>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </div>

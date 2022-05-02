@@ -2,24 +2,21 @@
 import React,{memo, useMemo} from "react";
 import { styled } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppSelector, useAppDispatch } from "../../redux/store";
-import { setTodo } from "../../redux/todoSlice";
-import { shallowEqual } from "react-redux";
 interface Props {
     title:string,
     color:string,
-    handleClickOpen(title:string):void,
+    handleClickOpen(e:React.MouseEvent<SVGSVGElement, MouseEvent>,title:string):void,
 }
 import {isMobile} from 'react-device-detect';
+import { useTodo } from './../../context';
 
 export const FolderItem:React.FC<Props> = memo(({title,color,handleClickOpen}) => {
-    const {currentTodo} = useAppSelector(state=>state.todo,shallowEqual);
-    const dispatch = useAppDispatch()
-    const setCurrentTodo = ():void => {
-        dispatch(setTodo({todo:title}))
+    const {currentTodo,setCurrentTodo} = useTodo()
+    const setTodoCurrent = ():void => {
+        setCurrentTodo(title)
     }
     return (
-        <Folder onClick={setCurrentTodo} style={{background:`${currentTodo === title ? "#FFFFFF" : "" }`,boxShadow:`${currentTodo === title ? "0px 2px 10px rgba(0, 0, 0, 0.03)" : "" }`}}>
+        <Folder onClick={setTodoCurrent} style={{background:`${currentTodo === title ? "#FFFFFF" : "" }`,boxShadow:`${currentTodo === title ? "0px 2px 10px rgba(0, 0, 0, 0.03)" : "" }`}}>
             <FolderColor style={{backgroundColor:`${color}`,display:`${isMobile ? "none" : ""}`}}>
             </FolderColor>
             <FolderTitle>

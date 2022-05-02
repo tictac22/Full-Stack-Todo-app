@@ -10,6 +10,7 @@ export interface IFormLogin {
 }
 export interface IFormRecover{
     email:string
+    password:string
 }
 
 

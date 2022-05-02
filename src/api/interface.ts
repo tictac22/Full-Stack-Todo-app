@@ -4,6 +4,5 @@ export interface AuthResponse {
     refreshToken:string,
     user : {
         id:string,
-        isActivated:boolean,
     }
 }

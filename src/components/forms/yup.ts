@@ -19,9 +19,7 @@ export const schemaLogin = yup.object({
 
 export const schemaRecover = yup.object({
     email: yup.string().required().email("invalid type of email"),
-}).required();
-
-export const schemaRecoverPassword = yup.object({
     password:yup.string().required().min(7,"at least 7 characters"),
     confirmPassword:yup.string().oneOf([yup.ref("password"),null],"passwords are not matched").stripEmptyString(),
 }).required();
+

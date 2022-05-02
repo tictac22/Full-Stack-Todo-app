@@ -37,28 +37,9 @@ export class AuthService {
 
         }
     }
-    static async activateEmail(link:string) {
-        try{
-            const {data} = await api.post('/user/activate/:link',{link})
-            return data
-        }
-        catch(e) {
-            const {message,type,errors} = e.response.data
-            throw new ErrorHandler(message,type,errors)
-        }
-    }
-    static async forgotPassword(email:string) {
+    static async forgotPassword({email,password}:{email:string,password:string}) {
         try {
-            await api.post('/user/resetpassword',{email})
-        }
-        catch(e) {
-            const {message,type,errors} = e.response.data
-            throw new ErrorHandler(message,type,errors)
-        }
-    }
-    static async setNewPassword(token:string,password:string) {
-        try {
-            await api.post('/user/setnewpassword',{token,password})
+            await api.post('/user/resetpassword',{email,password})
         }
         catch(e) {
             const {message,type,errors} = e.response.data

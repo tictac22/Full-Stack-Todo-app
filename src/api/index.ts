@@ -1,6 +1,6 @@
 import axios from "axios";
 //http://localhost:5000
-export const BASE_URL = "https://todoapp231.herokuapp.com"
+export const BASE_URL = "http://localhost:5000"
 
 export const api = axios.create({
     withCredentials:true,

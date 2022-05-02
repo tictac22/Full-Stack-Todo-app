@@ -17,17 +17,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { FolderItem } from "./folderItem";
 import { IFolders } from "../../interfaces";
-import { shallowEqual } from "react-redux";
-import { useAppDispatch,useAppSelector } from './../../redux/store';
-import { setTodo } from "../../redux/todoSlice";
+import { useTodo } from './../../context';
 
 
 export const NavBar:React.FC = () => {
     const [open, setOpen] = useState(false);
     const [title,setTitle] = useState<string>("");
-    const {currentTodo} = useAppSelector(state=>state.todo,shallowEqual)
-    const dispatch = useAppDispatch()
-    const handleClickOpen = useMemo(()=>(e,folderTitle:string) => {
+    const {currentTodo,setCurrentTodo} = useTodo();
+    const handleClickOpen = useMemo(()=>(e:React.MouseEvent<SVGSVGElement, MouseEvent>,folderTitle:string) => {
         e.stopPropagation()
         setOpen(true);
         setTitle(folderTitle)
@@ -36,7 +33,7 @@ export const NavBar:React.FC = () => {
         setOpen(false);
     };
     const setAllTodo = ():void => {
-        dispatch(setTodo({todo:""}))
+        setCurrentTodo("");
     } 
     const queryClient = new useQueryClient();
     const {data} = useQuery<IFolders[]>(["folder"],()=>MethodsService.getFolder());

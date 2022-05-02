@@ -5,8 +5,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import { styled } from '@mui/system';
 import { useMutation, useQueryClient } from "react-query";
 import { MethodsService } from './../../api/methodsService';
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { setTodo } from "../../redux/todoSlice";
+import { useTodo } from './../../context';
 
 interface Props {
     color:string,
@@ -14,12 +13,11 @@ interface Props {
     title:string
 }
 export const TodoTitle:React.FC<Props> = memo(({title,color,isAll}) => {
-    const dispatch = useAppDispatch()
-
+    const {setCurrentTodo} = useTodo()
     const [isEditable,setIsEditable] = useState(false);
     const toggleEditable = ():void => setIsEditable(!isEditable);
     
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null!);
     const prevValue = useMemo(()=>ref?.current && ref.current.innerText,[isEditable]);
     
     const queryClient = useQueryClient()
@@ -27,7 +25,7 @@ export const TodoTitle:React.FC<Props> = memo(({title,color,isAll}) => {
     (currentValue:string)=>MethodsService.changeTitle(prevValue,currentValue),{
         onSuccess: ({data}) => {
             queryClient.setQueryData(['folder'], data.tasks)
-            dispatch(setTodo({todo:data.currentValue}))
+            setCurrentTodo(data.currentValue)
         },
         onError: () => {
             toggleEditable()
