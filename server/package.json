@@ -15,11 +15,10 @@
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash.remove": "^4.7.0",
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.0",
+    "nodemon": "^2.0.14",
     "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.14"
   }
 }

@@ -1,6 +1,5 @@
 
 import mongoose from "mongoose"
-import { string } from "yup";
 const schema = mongoose.Schema({
     user:{type:mongoose.Schema.Types.ObjectId,ref:"UserDatas",required:true},
     tasks:[
