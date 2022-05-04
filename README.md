@@ -4,6 +4,7 @@ Simple todo-app with written back-end on node.js
 
 Front-end:
 - React
+- React Query
 - Typescript
 - Material UI
 - React Hook Form
