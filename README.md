@@ -17,4 +17,4 @@ Back-end:
 - JWT
 
 To check app:
-https://fullstacktodo1.herokuapp.com/
+https://shimmering-chebakia-2391d8.netlify.app/
